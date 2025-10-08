@@ -1,7 +1,7 @@
 import base64
 from flask import jsonify, request
 from __init__ import APP
-import script
+import process
 
 
 @APP.route("/procesar_pdf", methods=["POST"])
@@ -14,7 +14,7 @@ def procesar():
 
     try:
         pdf_bytes = base64.b64decode(pdf_b64)
-        resultado = script.procesar_pdf(pdf_bytes)
+        resultado = process.procesar_pdf(pdf_bytes)
         return jsonify(resultado)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
