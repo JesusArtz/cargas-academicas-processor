@@ -1,10 +1,37 @@
-# procesar_pdf.py
+"""
+process.py
+----------------
+Módulo encargado de procesar un archivo PDF que contiene una carga académica
+(tabla con los días Lunes–Viernes y sus respectivos horarios).
+
+Extrae los horarios, los ordena y devuelve un JSON con los **espacios disponibles**
+entre clases de cada día.
+
+Dependencias:
+    - pdfplumber
+    - pandas
+    - re
+
+Funciones principales:
+    - procesar_pdf(pdf_bytes): procesa un PDF en bytes y retorna los horarios libres por día.
+"""
 import io
 import pdfplumber
 import pandas as pd
 import re
 
 def parse_interval(horario):
+    """
+    Convierte una cadena de horario (por ejemplo: "07:00 - 09:00")
+    en un par de minutos enteros (inicio, fin).
+
+    Args:
+        horario (str): Texto del horario a analizar.
+
+    Returns:
+        tuple[int, int] | None: (inicio_minutos, fin_minutos) o None si el formato no coincide.
+    """
+    
     match = re.findall(r"(\d{1,2}):(\d{2})", str(horario))
     if len(match) >= 2:
         start_h, start_m = map(int, match[0])
@@ -13,9 +40,34 @@ def parse_interval(horario):
     return None
 
 def min_to_str(m):
+    """
+    Convierte minutos enteros a formato HH:MM.
+
+    Args:
+        m (int): Minutos desde medianoche.
+
+    Returns:
+        str: Hora formateada (por ejemplo: '07:00')
+    """
     return f"{m // 60:02d}:{m % 60:02d}"
 
 def procesar_pdf(pdf_bytes: bytes):
+    """
+    Procesa un PDF de carga académica y obtiene los horarios disponibles
+    (espacios libres entre clases) para cada día de la semana.
+
+    Args:
+        pdf_bytes (bytes): Contenido binario del archivo PDF.
+
+    Returns:
+        dict: Diccionario con los días como claves y listas de horarios libres como valores.
+              Ejemplo:
+              {
+                  "lunes": ["09:00 - 11:00", "13:00 - 15:00"],
+                  "martes": [],
+                  ...
+              }
+    """
     filas = []
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
         for pagina in pdf.pages:
