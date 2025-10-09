@@ -7,7 +7,7 @@ import verify
 
 @APP.route("/", methods = ["GET"])
 def main():
-    return "hello"
+    return "hello", 200
 
 @APP.route("/procesar_pdf", methods=["POST"])
 def procesar():
