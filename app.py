@@ -5,6 +5,10 @@ import process
 import verify
 
 
+@APP.route("/", methods = ["GET"])
+def main():
+    return "сука блять"
+
 @APP.route("/procesar_pdf", methods=["POST"])
 def procesar():
     data = request.json
