@@ -41,8 +41,4 @@ def verificar():
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     APP.run(debug=True, host="0.0.0.0")
-=======
-    APP.run(host="0.0.0.0", port=5000)
->>>>>>> d3aadb69f09e055015082db4f8563e24dd758509
