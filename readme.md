@@ -14,22 +14,4 @@ Esta API permite procesar y verificar archivos PDF que contienen cargas académi
 
 ---
 
-## Funciones del módulo `process.py`
 
-### `procesar_pdf(pdf_bytes: bytes) -> dict`
-
-- **Descripción:**  
-  Procesa un PDF de carga académica y obtiene los horarios libres entre clases para cada día de la semana.
-
-- **Argumentos:**  
-  - `pdf_bytes`: Contenido binario del archivo PDF.
-
-- **Retorno:**  
-  ```json
-  {
-      "lunes": ["09:00 - 11:00", "13:00 - 15:00"],
-      "martes": [],
-      "miércoles": ["10:00 - 12:00"],
-      "jueves": [],
-      "viernes": ["08:00 - 09:00", "11:00 - 12:30"]
-  }
