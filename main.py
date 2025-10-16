@@ -1,8 +1,8 @@
 import base64
 from flask import jsonify, request
 from __init__ import APP
-import process
-import verify
+import src.process as process
+import src.verify as verify
 
 
 @APP.route("/", methods = ["GET"])
@@ -23,7 +23,7 @@ def procesar():
         return jsonify(resultado)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+     
 @APP.route("/verificar_pdf", methods=["POST"])
 def verificar():
     data = request.json
